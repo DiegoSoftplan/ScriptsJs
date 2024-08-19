@@ -11,16 +11,3 @@ if (model.OrgaoEmissor == 1 || model.OrgaoEmissor == 4){//DIVISÃO DE CONTROLE E
     model.cdSetorAbertura = 26;
     model.cdOrgao = 2;
 }
-
-
-
-
-if (model.Conselho== 1){//COMEDIC
-    model.cdSetorDestino = 1509;
-    model.cdSetorResponsavel = 7;
-    model.cdOrgao = 7;
-} else if (model.Conselho== 2){//CMCTI 
-    model.cdSetorDestino = 629;
-    model.cdSetorResponsavel = 7;
-    model.cdOrgao = 7;
-}
