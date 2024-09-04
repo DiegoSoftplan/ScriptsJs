@@ -86,7 +86,55 @@ if (campoCEP) {
   configurarMascaraCEP(campoCEP);
 }
 
-const campoCEPCnpj = document.getElementById("CepCnpj");
+const campoCEPCnpj = document.getElementById("CepProfissional");
 if (campoCEPCnpj) {
   configurarMascaraCEP(campoCEPCnpj);
+}
+
+
+//////////////////////////////////CPF ou CNPJ//////////////////////////////////////////////
+// Função para aplicar a máscara ao valor do CPF ou CNPJ
+function aplicarMascaraCpfCnpj(valor) {
+  // Remove todos os caracteres não numéricos
+  valor = valor.replace(/\D/g, '');
+
+  if (valor.length <= 11) {
+    // Aplica a máscara para CPF (XXX.XXX.XXX-XX)
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  } else if (valor.length <= 14) {
+    // Aplica a máscara para CNPJ (XX.XXX.XXX/XXXX-XX)
+    valor = valor.replace(/(\d{2})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1/$2");
+    valor = valor.replace(/(\d{4})(\d{1,2})$/, "$1-$2");
+  }
+
+  return valor;
+}
+
+// Função para configurar a máscara de CPF ou CNPJ em um campo
+function configurarMascaraCpfCnpj(campo) {
+  function aplicarMascara() {
+    const valorAtual = campo.value;
+    const valorFormatado = aplicarMascaraCpfCnpj(valorAtual);
+
+    if (valorAtual !== valorFormatado) {
+      campo.value = valorFormatado;
+    }
+  }
+
+  // Aplica a máscara quando o valor do campo muda e ao perder o foco
+  campo.addEventListener("input", aplicarMascara);
+  campo.addEventListener("blur", aplicarMascara);
+
+  // Aplica a máscara ao carregar o valor inicial
+  aplicarMascara();
+}
+
+// Configura a máscara para o campo com ID 'CpfCnpj'
+const campoCpfCnpj = document.getElementById("Documento");
+if (campoCpfCnpj) {
+  configurarMascaraCpfCnpj(CpfCnpj);
 }
