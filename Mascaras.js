@@ -92,7 +92,7 @@ if (campoCEPCnpj) {
 }
 
 
-//////////////////////////////////CPF ou CNPJ//////////////////////////////////////////////
+/////////////////////////////////CPF ou CNPJ//////////////////////////////////////////////
 // Função para aplicar a máscara ao valor do CPF ou CNPJ
 function aplicarMascaraCpfCnpj(valor) {
   // Remove todos os caracteres não numéricos
@@ -114,6 +114,11 @@ function aplicarMascaraCpfCnpj(valor) {
   return valor;
 }
 
+// Função para remover a máscara de CPF ou CNPJ
+function removerMascara(valor) {
+  return valor.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+}
+
 // Função para configurar a máscara de CPF ou CNPJ em um campo
 function configurarMascaraCpfCnpj(campo) {
   function aplicarMascara() {
@@ -125,16 +130,24 @@ function configurarMascaraCpfCnpj(campo) {
     }
   }
 
+  function removerMascaraAoAlterar() {
+    campo.value = removerMascara(campo.value); // Remove a máscara ao alterar o valor do campo
+  }
+
+  // Remove a máscara ao focar no campo
+  campo.addEventListener("focus", removerMascaraAoAlterar);
+
   // Aplica a máscara quando o valor do campo muda e ao perder o foco
-  campo.addEventListener("input", aplicarMascara);
   campo.addEventListener("blur", aplicarMascara);
+  //Habilitar caso o campo venha preenchido automaticamente
+  //campo.addEventListener("input", aplicarMascara);
 
   // Aplica a máscara ao carregar o valor inicial
   aplicarMascara();
 }
 
 // Configura a máscara para o campo com ID 'CpfCnpj'
-const campoCpfCnpj = document.getElementById("Documento");
-if (campoCpfCnpj) {
-  configurarMascaraCpfCnpj(CpfCnpj);
+const CpfCnpj = document.getElementById("CpfCnpj");
+if (CpfCnpj) {
+    configurarMascaraCpfCnpj(CpfCnpj);
 }
