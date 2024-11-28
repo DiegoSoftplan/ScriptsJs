@@ -1,0 +1,36 @@
+function calcularData(diaReferencia) {
+    var dataAtual = new Date();
+    var diaAtual = dataAtual.getDate();
+    var mesAtual = dataAtual.getMonth();
+    var anoAtual = dataAtual.getFullYear();
+    var dataCalculada;
+ 
+    if (diaAtual <= diaReferencia) {
+
+        dataCalculada = new Date(anoAtual, mesAtual, diaReferencia);
+
+    } else {
+
+       mesAtual++;
+         
+        if (mesAtual > 11) {
+            mesAtual = 0;
+            anoAtual++;
+        }
+ 
+        dataCalculada = new Date(anoAtual, mesAtual, diaReferencia);
+        dataCalculada.setHours(20);
+        dataCalculada.setMinutes(59);
+        dataCalculada.setSeconds(59);
+        dataCalculada.setMilliseconds(999);
+    }
+
+    return dataCalculada.toISOString();
+
+}
+
+var todaData = calcularData(26);
+var todoDia = calcularData(18);
+ 
+execution.setVariable("#todaData", todaData);
+execution.setVariable("#todoDia", todoDia);
