@@ -1,0 +1,41 @@
+// Obter a data atual
+const hoje = new Date();
+
+// Adicionar 15 dias (mínimo)
+const dataMinima = new Date(hoje);
+dataMinima.setDate(hoje.getDate() + 15);
+
+// Adicionar 120 dias (máximo)
+const dataMaxima = new Date(hoje);
+dataMaxima.setDate(hoje.getDate() + 120);
+
+// Verificar se o array QtdDias existe e contém itens
+if (Array.isArray(model.QtdDias) && model.QtdDias.length > 0) {
+  // Iterar sobre cada item do array
+  model.QtdDias.forEach((item, index) => {
+    if (item.data && !item.validado) {
+      // Supondo que a data seja no formato "dd/mm/yyyy"
+      const partesData = item.data.split('/'); // Separar por "/"
+      const dataInformadaDate = new Date(
+        parseInt(partesData[2]), // Ano
+        parseInt(partesData[1]) - 1, // Mês (zero-based)
+        parseInt(partesData[0]) // Dia
+      );
+
+      // Verificar se a data informada está dentro do intervalo de 15 a 120 dias
+      if (dataInformadaDate < dataMinima || dataInformadaDate > dataMaxima) {
+        alert(
+          `Pedidos para evento devem ser feitos com no mínimo 15 dias e no máximo 120 dias de antecedência.`
+        );
+
+        // Limpar o campo de data
+        item.data = ""; // Define o valor como vazio
+      } else {
+        alert(`A data no item ${index + 1} está dentro do intervalo permitido.`);
+      }
+
+      // Marcar o item como validado para evitar loop
+      item.validado = true;
+    }
+  });
+}
